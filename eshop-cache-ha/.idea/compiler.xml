@@ -7,17 +7,10 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="eshop-cache-ha" />
-        <module name="eshop-product-ha" />
-        <module name="eureka-server" />
-        <module name="hystrix-terbine-server" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="eshop-cache-ha" target="1.8" />
-      <module name="eshop-product-ha" target="1.8" />
-      <module name="eureka-server" target="1.5" />
-      <module name="hystrix-terbine-server" target="1.5" />
-      <module name="hystrixterbineserver" target="1.5" />
     </bytecodeTargetLevel>
   </component>
 </project>
