@@ -7,6 +7,7 @@
         <option value="$PROJECT_DIR$/hystrix-terbine-server/pom.xml" />
         <option value="$PROJECT_DIR$/eshop-cache-ha/pom.xml" />
         <option value="$PROJECT_DIR$/eshop-product-ha/pom.xml" />
+        <option value="$PROJECT_DIR$/eshop-cache/pom.xml" />
       </list>
     </option>
   </component>

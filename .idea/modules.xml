@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/eshop.iml" filepath="$PROJECT_DIR$/.idea/eshop.iml" />
+      <module fileurl="file://$PROJECT_DIR$/eshop-cache/eshop-cache.iml" filepath="$PROJECT_DIR$/eshop-cache/eshop-cache.iml" />
       <module fileurl="file://$PROJECT_DIR$/eshop-cache-ha/eshop-cache-ha.iml" filepath="$PROJECT_DIR$/eshop-cache-ha/eshop-cache-ha.iml" />
       <module fileurl="file://$PROJECT_DIR$/eshop-product-ha/eshop-product-ha.iml" filepath="$PROJECT_DIR$/eshop-product-ha/eshop-product-ha.iml" />
       <module fileurl="file://$PROJECT_DIR$/eureka-server/eureka-server.iml" filepath="$PROJECT_DIR$/eureka-server/eureka-server.iml" />

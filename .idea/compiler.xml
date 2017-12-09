@@ -6,6 +6,7 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="eshop-cache" />
         <module name="eshop-cache-ha" />
         <module name="eshop-product-ha" />
         <module name="eureka-server" />
@@ -13,6 +14,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="eshop-cache" target="1.8" />
       <module name="eshop-cache-ha" target="1.8" />
       <module name="eshop-product-ha" target="1.8" />
       <module name="eureka-server" target="1.5" />
