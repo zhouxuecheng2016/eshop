@@ -1,0 +1,32 @@
+资源隔离这一块东西，做稍微更加深入一些的讲解，告诉你，除了可以选择隔离策略以外，
+对你选择的隔离策略，可以做一定的细粒度的一些控制
+
+1、execution.isolation.strategy
+
+
+2、command名称和command组
+(1)command group，是一个非常重要的概念，默认情况下，因为就是通过command group来定义一个线程池的，而且还会通过command group来聚合一些监控和报警信息
+同一个command group中的请求，都会进入同一个线程池中
+
+3、command线程池
+threadpool key代表了一个HystrixThreadPool，用来进行统一监控，统计，缓存
+默认的threadpool key就是command group名称
+每个command都会跟它的threadpool key对应的thread pool绑定在一起
+
+(1)command key，代表了一类command，一般来说，代表了底层的依赖服务的一个接口
+(2)command group，代表了某一个底层的依赖服务，合理，一个依赖服务可能会暴露出来多个接口，每个接口就是一个command key
+在逻辑上去组织起来一堆command key的调用，统计信息，成功次数，timeout超时次数，失败次数，可以看到某一个服务整体的一些访问情况
+一般来说，推荐是根据一个服务去划分出一个线程池，command key默认都是属于同一个线程池的
+
+
+
+
+4、coreSize
+
+
+5、queueSizeRejectionThreshold
+
+
+6、execution.isolation.semaphore.maxConcurrentRequests
+
+

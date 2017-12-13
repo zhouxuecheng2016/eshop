@@ -12,7 +12,7 @@ public class CommandHelloWorld  extends HystrixCommand<String> {
     private final String name;
 
     public CommandHelloWorld(String name) {
-        super(HystrixCommandGroupKey.Factory.asKey("ExampleGroup"));
+        super(Setter.withGroupKey(HystrixCommandGroupKey.Factory.asKey("ExampleGroup")));
         this.name = name;
     }
 

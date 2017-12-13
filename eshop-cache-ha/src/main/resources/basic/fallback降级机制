@@ -1,0 +1,25 @@
+
+1、创建command
+2、执行command
+3、request cache
+4、短路器，如果打开了，fallback降级机制
+
+1、fallback降级机制
+hystrix调用各种接口，或者访问外部依赖，mysql，redis，zookeeper，kafka，等等，如果出现了任何异常的情况
+(1)比如说报错了，访问mysql报错，redis报错，zookeeper报错，kafka报错，error
+(2)对每个外部依赖，无论是服务接口，中间件，资源隔离，对外部依赖只能用一定量的资源去访问，线程池/信号量，如果资源池已满，reject
+(3)访问外部依赖的时候，访问时间过长，可能就会导致超时，报一个TimeoutException异常，timeout
+(4)上述三种情况，都是我们说的异常情况，对外部依赖的东西访问的时候出现了异常，发送异常事件到短路器中去进行统计
+   如果短路器发现异常事件的占比达到了一定的比例，直接开启短路，circuit breaker
+
+两种最经典的降级机制：纯内存数据，默认值.
+
+2、fallback.isolation.semaphore.maxConcurrentRequests
+
+这个参数设置了HystrixCommand.getFallback()最大允许的并发请求数量，默认值是10，也是通过semaphore信号量的机制去限流
+
+如果超出了这个最大值，那么直接被reject
+
+HystrixCommandProperties.Setter()
+   .withFallbackIsolationSemaphoreMaxConcurrentRequests(int value)
+

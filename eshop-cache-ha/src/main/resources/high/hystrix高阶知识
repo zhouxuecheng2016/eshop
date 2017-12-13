@@ -1,0 +1,13 @@
+hystrix的高阶知识
+
+1、request collapser，请求合并技术
+2、fail-fast和fail-slient，高阶容错模式
+3、static fallback和stubbed fallback，高阶降级模式
+4、嵌套command实现的发送网络请求的降级模式
+5、基于facade command的多级降级模式
+6、request cache的手动清理
+7、生产环境中的线程池大小以及timeout配置优化经验
+8、线程池的自动化动态扩容与缩容技术
+9、hystrix的metric高阶配置
+10、基于hystrix dashboard的可视化分布式系统监控
+11、生产环境中的hystrix工程运维经验

@@ -27,11 +27,9 @@ public class ObservableCommandHelloWorld extends HystrixObservableCommand<String
             @Override
             public void call(Subscriber<? super String> observer) {
                 try {
-                    if (!observer.isUnsubscribed()) {
-                        observer.onNext("Hello " + name + "!");
-                        observer.onNext("Hi " + name + "!");
-                        observer.onCompleted();
-                    }
+                    observer.onNext("Hello " + name + "!");
+                    observer.onNext("Hi " + name + "!");
+                    observer.onCompleted();
                 } catch (Exception e) {
                     observer.onError(e);
                 }

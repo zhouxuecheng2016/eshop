@@ -18,12 +18,12 @@ import com.roncoo.eshop.cache.ha.model.ProductInfo;
 public class GetProductInfosCommand extends HystrixObservableCommand<ProductInfo> {
 
 	private String[] productIds;
-
+	
 	public GetProductInfosCommand(String[] productIds) {
 		super(HystrixCommandGroupKey.Factory.asKey("GetProductInfoGroup"));
 		this.productIds = productIds;
 	}
-
+	
 	@Override
 	protected Observable<ProductInfo> construct() {
 		return Observable.create(new Observable.OnSubscribe<ProductInfo>() {
@@ -33,15 +33,15 @@ public class GetProductInfosCommand extends HystrixObservableCommand<ProductInfo
 					for(String productId : productIds) {
 						String url = "http://127.0.0.1:8082/getProductInfo?productId=" + productId;
 						String response = HttpClientUtils.sendGetRequest(url);
-						ProductInfo productInfo = JSONObject.parseObject(response, ProductInfo.class);
-						observer.onNext(productInfo);
+						ProductInfo productInfo = JSONObject.parseObject(response, ProductInfo.class); 
+						observer.onNext(productInfo); 
 					}
 					observer.onCompleted();
 				} catch (Exception e) {
-					observer.onError(e);
+					observer.onError(e);  
 				}
 			}
-
+			
 		}).subscribeOn(Schedulers.io());
 	}
 
