@@ -1,0 +1,53 @@
+
+1、为什么需要监控与报警？
+HystrixCommand执行的时候，会生成一些执行耗时等方面的统计信息。这些信息对于系统的运维来说，是很有帮助的，因为我们通过这些统计信息可以看到整个系统是怎么运行的。hystrix对每个command key都会提供一份metric，而且是秒级统计粒度的。
+
+这些统计信息，无论是单独看，还是聚合起来看，都是很有用的。如果将一个请求中的多个command的统计信息拿出来单独查看，包括耗时的统计，对debug系统是很有帮助的。聚合起来的metric对于系统层面的行为来说，是很有帮助的，很适合做报警或者报表。hystrix dashboard就很适合。
+
+2、hystrix的事件类型
+对于hystrix command来说，只会返回一个值，execute只有一个event type，fallback也只有一个event type，那么返回一个SUCCESS就代表着命令执行的结束
+对于hystrix observable command来说，多个值可能被返回，所以emit event代表一个value被返回，success代表成功，failure代表异常
+
+3、metric storage
+metric被生成之后，就会按照一段时间来存储，存储了一段时间的数据才会推送到其他系统中，比如hystrix dashboard
+另外一种方式，就是每次生成metric就实时推送metric流到其他地方，但是这样的话，会给系统带来很大的压力
+hystrix的方式是将metric写入一个内存中的数据结构中，在一段时间之后就可以查询到
+hystrix 1.5x之后，采取的是为每个command key都生成一个start event和completion event流，而且可以订阅这个流。
+每个thread pool key也是一样的，包括每个collapser key也是一样的。
+
+每个command的event是发送给一个线程安全的RxJava中的rx.Subject，因为是线程安全的，所以不需要进行线程同步
+
+因此每个command级别的，threadpool级别的，每个collapser级别的，event都会发送到对应的RxJava的rx.Subject对象中。
+这些rx.Subject对象接着就会被暴露出Observable接口，可以被订阅。
+
+4、metric统计相关的配置
+
+(1)metrics.rollingStats.timeInMilliseconds
+设置统计的rolling window，单位是毫秒，hystrix只会维持这段时间内的metric供短路器统计使用
+这个属性是不允许热修改的，默认值是10000，就是10秒钟
+HystrixCommandProperties.Setter().withMetricsRollingStatisticalWindowInMilliseconds(int value)
+
+(2)metrics.rollingStats.numBuckets
+该属性设置每个滑动窗口被拆分成多少个bucket，而且滑动窗口对这个参数必须可以整除，同样不允许热修改
+默认值是10，也就是说，每秒钟是一个bucket
+随着时间的滚动，比如又过了一秒钟，那么最久的一秒钟的bucket就会被丢弃，然后新的一秒的bucket会被创建
+HystrixCommandProperties.Setter().withMetricsRollingStatisticalWindowBuckets(int value)
+
+(3)metrics.rollingPercentile.enabled
+控制是否追踪请求耗时，以及通过百分比方式来统计，默认是true
+
+(4)metrics.rollingPercentile.timeInMilliseconds
+设置rolling window被持久化保存的时间，这样才能计算一些请求耗时的百分比，默认是60000，60s，不允许热修改
+相当于是一个大的rolling window，专门用于计算请求执行耗时的百分比
+HystrixCommandProperties.Setter().withMetricsRollingPercentileWindowInMilliseconds(int value)
+
+
+(5)metrics.rollingPercentile.numBuckets
+
+
+(6)metrics.rollingPercentile.bucketSize
+
+
+(7)metrics.healthSnapshot.intervalInMilliseconds
+
+
