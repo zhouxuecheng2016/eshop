@@ -1,0 +1,12 @@
+
+1:Eureka基本原理
+
+（1）服务都会注册到eureka的注册表
+（2）eureka有心跳机制，自动检测服务，故障时自动从注册表中摘除
+（3）每个服务也会缓存euraka的注册表，即使eureka server挂掉，每个服务也可以基于本地注册表缓存，与其他服务进行通信
+（4）只不过是如果eureka server挂掉了，那么无法发布新的服务了
+
+实验步骤
+
+（1）启动和发布一个eureka server，注册中心，web界面可以看到所有注册的服务
+（2）写一个hello world服务，注册到eureka server上去

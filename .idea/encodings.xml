@@ -3,10 +3,13 @@
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$/eshop-cache" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/eshop-cache-ha" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/eshop-datasync-service" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/eshop-product-ha" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/eureka-server" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/greeting-service" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/hystrix-terbine-server" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/hystrix-terbine-server" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/hystrixterbineserver" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/say-hello-service" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/springboot-helloworld" charset="UTF-8" />
   </component>
 </project>

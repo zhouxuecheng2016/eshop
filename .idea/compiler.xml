@@ -10,16 +10,23 @@
         <module name="eshop-cache-ha" />
         <module name="eshop-product-ha" />
         <module name="eureka-server" />
+        <module name="greeting-service" />
         <module name="hystrix-terbine-server" />
+        <module name="say-hello-service" />
+        <module name="springboot-helloworld" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="eshop-cache" target="1.8" />
       <module name="eshop-cache-ha" target="1.8" />
+      <module name="eshop-datasync-service" target="1.8" />
       <module name="eshop-product-ha" target="1.8" />
-      <module name="eureka-server" target="1.5" />
-      <module name="hystrix-terbine-server" target="1.5" />
+      <module name="eureka-server" target="1.8" />
+      <module name="greeting-service" target="1.8" />
+      <module name="hystrix-terbine-server" target="1.8" />
       <module name="hystrixterbineserver" target="1.5" />
+      <module name="say-hello-service" target="1.8" />
+      <module name="springboot-helloworld" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>

@@ -1,0 +1,51 @@
+
+redis cluster
+1:twemproxy+redis去做集群,twemproxy这么一个缓存集群的中间件
+(1)不好做读写分离，读写请求全部落到主实例上的，如果要扩展写QPS，或者是扩展读QPS，都是需要扩展主实例的数量，从实例就是一个用做热备+高可用
+(2)不好跟nginx+lua直接整合，lua->redis的client api，但是不太支持redis cluster，中间就要走一个中转的java服务.
+(3)不好做树状集群结构，比如redis主集群一主三从双机房架构，redis cluster不太好做成那种树状结构
+(4)方便，相当于是上下线节点，集群扩容，运维工作，高可用自动切换，比较方便
+
+2:twemproxy+redis
+
+(1)上线下线节点，有一些手工维护集群的成本
+(2)支持redis集群+读写分离，就是最基本的多个redis主实例，twemproxy这个中间件来决定的，java/nginx+lua客户端，是连接twemproxy中间件的。每个redis主实例就挂载了多个redis从实例，高可用->哨兵，redis cluster读写都要落到主实例的限制，你自己可以决定写主，读从，等等
+(3)支持redis cli协议，可以直接跟nginx+lua整合
+(4)可以搭建树状集群结构
+
+3、twemproxy部署
+/usr/local/twemproxy-test/twemproxy-0.4.0/src/nutcracker -d -c /usr/local/twemproxy-test/twemproxy-0.4.0/conf/nutcracker.yml
+
+-d, --daemonize   :run as a daemon
+-c, --conf-file=S :set configuration file (default: conf/nutcracker.yml)
+
+nutcracker.yml
+
+4、twemproxy讲解
+
+eshop-detail-test:
+  listen: 127.0.0.1:1111
+  hash: fnv1a_64
+  distribution: ketama
+  timeout:1000
+  redis: true
+  servers:
+   - 127.0.0.1:6379:1 test-redis-01
+   - 127.0.0.1:6380:1 test-redis-02
+
+eshop-detail-test: redis集群的逻辑名称
+listen：twemproxy监听的端口号
+hash：hash散列算法
+distribution：分片算法，一致性hash，取模，等等
+timeout：跟redis连接的超时时长
+redis：是否是redis，false的话是memcached
+servers：redis实例列表，一定要加别名，否则默认使用ip:port:weight来计算分片，如果宕机后更换机器，那么分片就不一样了，因此加了别名后，可以确保分片一定是准确的
+
+你的客户端，java/nginx+lua，连接twemproxy，写数据的时候，twemproxy负责将数据分片，写入不同的redis实例
+如果某个redis机器宕机，需要自动从一致性hash环上摘掉，等恢复后自动上线
+
+auto_eject_hosts: true，自动摘除故障节点
+server_retry_timeout: 30000，每隔30秒判断故障节点是否正常，如果正常则放回一致性hash环
+server_failure_limit: 2，多少次无响应，就从一致性hash环中摘除
+
+

@@ -4,10 +4,13 @@
     <option name="originalFiles">
       <list>
         <option value="$PROJECT_DIR$/eureka-server/pom.xml" />
-        <option value="$PROJECT_DIR$/hystrix-terbine-server/pom.xml" />
         <option value="$PROJECT_DIR$/eshop-cache-ha/pom.xml" />
         <option value="$PROJECT_DIR$/eshop-product-ha/pom.xml" />
         <option value="$PROJECT_DIR$/eshop-cache/pom.xml" />
+        <option value="$PROJECT_DIR$/hystrix-terbine-server/pom.xml" />
+        <option value="$PROJECT_DIR$/say-hello-service/pom.xml" />
+        <option value="$PROJECT_DIR$/springboot-helloworld/pom.xml" />
+        <option value="$PROJECT_DIR$/greeting-service/pom.xml" />
       </list>
     </option>
   </component>
